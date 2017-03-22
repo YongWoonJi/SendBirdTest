@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/group"
+            android:title="그룹 채널"
+            android:icon="@drawable/ic_group_channels" />
+        <item android:id="@+id/open"
+            android:title="오픈 채널"
+            android:icon="@drawable/ic_open_channels" />
+    </group>
+
+    <group
+        android:id="@+id/aaa"
+        android:checkableBehavior="single">
+        <item android:id="@+id/disconnect"
+            android:title="로그아웃"
+            android:icon="@drawable/ic_disconnect" />
+    </group>
+
+</menu>

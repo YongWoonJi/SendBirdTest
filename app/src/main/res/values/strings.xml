@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SendBirdTest</string>
+    <string name="main_drawer_open">open drawer</string>
+    <string name="main_drawer_close">close drawer</string>
+</resources>
