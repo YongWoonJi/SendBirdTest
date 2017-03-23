@@ -18,7 +18,7 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="83dp"
+        android:layout_marginTop="102dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintTop_toTopOf="parent" />
     
@@ -32,10 +32,9 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.207"
+        app:layout_constraintVertical_bias="0.172"
         android:id="@+id/textInputLayout"
-        tools:layout_editor_absoluteY="221dp"
-        tools:layout_editor_absoluteX="36dp">
+        app:layout_constraintHorizontal_bias="0.505">
 
 
         <android.support.design.widget.TextInputEditText
@@ -64,11 +63,13 @@
         app:layout_constraintVertical_bias="0.04"
         tools:layout_editor_absoluteX="85dp">
 
-        <EditText
+        <android.support.design.widget.TextInputEditText
             android:id="@+id/editNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nickname" />
+            android:inputType="textVisiblePassword"
+            android:hint="Nickname"
+            android:imeOptions="actionDone"/>
 
     </android.support.design.widget.TextInputLayout>
 

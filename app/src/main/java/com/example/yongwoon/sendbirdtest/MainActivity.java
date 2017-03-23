@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.yongwoon.sendbirdtest.group.GroupChannelListFragment_;
 import com.example.yongwoon.sendbirdtest.main.LoginActivity_;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
@@ -50,8 +51,13 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationDrawer();
         setUpDrawerToggle();
 
-
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new GroupChannelListFragment_())
+                .commit();
+        navi.setCheckedItem(R.id.group);
     }
+
+
 
     @Override
     protected void onResume() {
@@ -114,8 +120,13 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.group:
+                        getSupportFragmentManager().popBackStack();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container, new GroupChannelListFragment_())
+                                .commit();
                         break;
                     case R.id.open:
+                        Toast.makeText(MainActivity.this, "오픈 채널", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.disconnect:
                         disconnect();

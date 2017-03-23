@@ -6,7 +6,6 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     ConstraintLayout layout;
 
     @ViewById
-    TextInputEditText editID;
-
-    @ViewById
-    EditText editNickname;
+    TextInputEditText editID, editNickname;
 
     @ViewById
     TextView textView;

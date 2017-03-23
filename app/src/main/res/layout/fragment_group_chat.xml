@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/divider"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="15dp"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_02"
+        android:layout_above="@+id/layout" />
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/background_01"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/imageAdd"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/btn_add_selector" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_chat_edit_text"
+            android:textSize="15sp"
+            android:scrollbars="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginRight="-1dp"
+            android:layout_marginEnd="-1dp"
+            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp" />
+
+        <TextView
+            android:id="@+id/textSend"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:text="전송"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textColor="@color/white_01"
+            android:background="@drawable/round_chat_send"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:foreground="?attr/selectableItemBackground"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutTyping"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_above="@+id/divider"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textTyping"
+            android:text="타이핑 중입니다"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/fabBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/divider"
+        android:elevation="6dp"
+        android:background="#99000000"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="사진"
+            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:id="@+id/text_faq"
+            android:layout_above="@+id/textQuestion"
+            android:layout_alignLeft="@+id/textQuestion"
+            android:layout_alignStart="@+id/textQuestion"
+            android:layout_marginBottom="56dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="카메라"
+            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:id="@+id/textQuestion"
+            android:layout_above="@+id/textMenu"
+            android:layout_alignLeft="@+id/textMenu"
+            android:layout_alignStart="@+id/textMenu"
+            android:layout_marginBottom="56dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="파일"
+            android:textSize="15sp"
+            android:textColor="#ffffff"
+            android:id="@+id/textMenu"
+            android:layout_marginLeft="89dp"
+            android:layout_marginStart="89dp"
+            android:layout_marginBottom="37dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/fab3"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/fab2"
+        android:visibility="invisible"
+        android:elevation="6dp"
+        android:src="@drawable/btn_photo_selector" />
+
+    <ImageView
+        android:id="@+id/fab2"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/fab1"
+        android:visibility="invisible"
+        android:elevation="6dp"
+        android:src="@drawable/btn_camera_selector" />
+
+    <ImageView
+        android:id="@+id/fab1"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_above="@+id/divider"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:visibility="invisible"
+        android:elevation="6dp"
+        android:src="@drawable/btn_addfile_selector" />
+
+
+</RelativeLayout>

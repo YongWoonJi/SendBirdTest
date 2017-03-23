@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/imageProfile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:text="Name"
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="@color/black_01"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/imageProfile"
+        android:layout_toRightOf="@+id/imageProfile"
+        android:layout_toEndOf="@+id/imageProfile"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-1.5dp" />
+
+
+
+    <com.example.yongwoon.sendbirdtest.EllipsizeEndTextView
+        android:id="@+id/textContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:textSize="13sp"
+        app:textColor="#888888"
+        app:maxLines="1"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/textName"
+        android:layout_alignLeft="@+id/textName"
+        android:layout_alignStart="@+id/textName"
+        android:layout_toStartOf="@+id/textTime"
+        android:layout_toLeftOf="@+id/textTime" />
+
+    <TextView
+        android:text="PM 4:25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#aaaaaa"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:id="@+id/textTime" />
+
+    <TextView
+        android:text="3"
+        android:id="@+id/textNewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:background="@drawable/round_drawable"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:layout_marginTop="-3dp"
+        android:layout_alignTop="@+id/textContent"
+        android:layout_alignRight="@+id/textTime"
+        android:layout_alignEnd="@+id/textTime" />
+
+</RelativeLayout>

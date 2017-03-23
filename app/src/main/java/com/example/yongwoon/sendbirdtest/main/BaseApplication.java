@@ -11,8 +11,7 @@ import com.sendbird.android.SendBird;
 
 public class BaseApplication extends Application {
 
-    private static final String APP_ID = "5087A865-57CF-4AB9-AA3B-2C7E71B50071";
-    public static final String VERSION = "1.0";
+    private static final String APP_ID = "64C046FB-83B8-4F06-97CD-52F14FE57EA7";
 
     static Context context;
 
