@@ -50,7 +50,12 @@ public class GroupChatListView extends RelativeLayout{
                 .into(imageProfile);
         textName.setText(Utils.getGroupChannelTitle(channel));
         textMember.setText(String.valueOf(channel.getMemberCount()));
-        textNew.setText(String.valueOf(channel.getUnreadMessageCount()));
+        if (channel.getUnreadMessageCount() > 0) {
+            textNew.setVisibility(VISIBLE);
+            textNew.setText(String.valueOf(channel.getUnreadMessageCount()));
+        } else {
+            textNew.setVisibility(INVISIBLE);
+        }
 
         BaseMessage lastMessage = channel.getLastMessage();
         if (lastMessage != null) {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.yongwoon.sendbirdtest.main.LoginActivity"
+    tools:context="com.example.yongwoon.sendbirdtest.main.LoginActivity_"
     android:background="#ffffff"
     android:id="@+id/layout"
     android:focusable="true"
@@ -20,7 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="102dp"
+        android:layout_marginTop="144dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintTop_toTopOf="parent" />
     
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.172"
+        app:layout_constraintVertical_bias="0.103"
         android:id="@+id/textInputLayout"
         app:layout_constraintHorizontal_bias="0.505">
 
@@ -70,7 +70,7 @@
             android:id="@+id/editNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textVisiblePassword"
+            android:inputType="text"
             android:hint="Nickname"
             android:backgroundTint="@color/colorPrimary"
             android:imeOptions="actionDone"/>

@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yongwoon.sendbirdtest.MainActivity;
+import com.example.yongwoon.sendbirdtest.main.MainActivity;
 import com.example.yongwoon.sendbirdtest.PreferenceManager;
 import com.example.yongwoon.sendbirdtest.R;
 import com.example.yongwoon.sendbirdtest.Utils;

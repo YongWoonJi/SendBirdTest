@@ -51,7 +51,12 @@ public class PrivateChatListView extends RelativeLayout {
                 .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context, 100, 0))
                 .into(imageProfile);
         textName.setText(Utils.getGroupChannelTitle(channel));
-        textNewCount.setText(String.valueOf(channel.getUnreadMessageCount()));
+        if (channel.getUnreadMessageCount() > 0) {
+            textNewCount.setVisibility(VISIBLE);
+            textNewCount.setText(String.valueOf(channel.getUnreadMessageCount()));
+        } else {
+            textNewCount.setVisibility(INVISIBLE);
+        }
 
         BaseMessage lastMessage = channel.getLastMessage();
         if (lastMessage != null) {

@@ -1,4 +1,4 @@
-package com.example.yongwoon.sendbirdtest;
+package com.example.yongwoon.sendbirdtest.main;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,19 +14,25 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.yongwoon.sendbirdtest.PreferenceManager;
+import com.example.yongwoon.sendbirdtest.R;
 import com.example.yongwoon.sendbirdtest.group.GroupChannelListFragment_;
-import com.example.yongwoon.sendbirdtest.main.LoginActivity_;
+import com.example.yongwoon.sendbirdtest.group.GroupChatFragment_;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity {
 
     private static final String CONNECTION_HANDLER_ID = "CONNECTION_HANDLER_MAIN";
+
+    @Extra
+    String groupChannelUrl;
 
     @ViewById
     Toolbar toolbar;
@@ -55,8 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.container, new GroupChannelListFragment_())
                 .commit();
         navi.setCheckedItem(R.id.group);
-    }
 
+        if (groupChannelUrl != null) {
+            Fragment f = GroupChatFragment_.builder().mChannelUrl(groupChannelUrl).build();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, f)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
 
 
     @Override
@@ -64,19 +77,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         SendBird.addConnectionHandler(CONNECTION_HANDLER_ID, new SendBird.ConnectionHandler() {
             @Override
-            public void onReconnectStarted() {
-
-            }
+            public void onReconnectStarted() {}
 
             @Override
-            public void onReconnectSucceeded() {
-
-            }
+            public void onReconnectSucceeded() {}
 
             @Override
-            public void onReconnectFailed() {
-
-            }
+            public void onReconnectFailed() {}
         });
     }
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:foreground="?attr/selectableItemBackground">
@@ -26,8 +25,7 @@
         android:layout_toRightOf="@+id/imageProfile"
         android:layout_toEndOf="@+id/imageProfile"
         android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="-1.5dp" />
+        android:layout_marginStart="10dp" />
 
 
 
@@ -72,11 +70,11 @@
         android:background="@drawable/round_drawable"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:layout_marginTop="-3dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_marginTop="-1dp"
         android:layout_alignTop="@+id/textContent"
         android:layout_alignRight="@+id/textTime"
-        android:layout_alignEnd="@+id/textTime" />
+        android:layout_alignEnd="@+id/textTime"/>
 
 </RelativeLayout>

@@ -10,7 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.yongwoon.sendbirdtest.MainActivity;
+import com.example.yongwoon.sendbirdtest.main.MainActivity;
 import com.example.yongwoon.sendbirdtest.R;
 import com.sendbird.android.BaseChannel;
 import com.sendbird.android.BaseMessage;

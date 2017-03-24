@@ -26,8 +26,8 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.example.yongwoon.sendbirdtest.MainActivity;
 import com.example.yongwoon.sendbirdtest.R;
+import com.example.yongwoon.sendbirdtest.main.MainActivity_;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -90,7 +90,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     public static void sendNotification(Context context, String messageBody, String channelUrl) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, MainActivity_.class);
         intent.putExtra("groupChannelUrl", channelUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

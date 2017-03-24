@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yongwoon.sendbirdtest.MainActivity_;
 import com.example.yongwoon.sendbirdtest.PreferenceManager;
 import com.example.yongwoon.sendbirdtest.R;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     void init() {
         editID.setText(PreferenceManager.getUserId());
         editNickname.setText(PreferenceManager.getNickname());
-        String sdkVersion = String.format("OS v%1$s / SendBird v%2$s", SendBird.getOSVersion(), SendBird.getSDKVersion());
+        String sdkVersion = String.format("Android OS v%1$s / SendBird v%2$s", SendBird.getOSVersion(), SendBird.getSDKVersion());
         textView.setText(sdkVersion);
     }
 
