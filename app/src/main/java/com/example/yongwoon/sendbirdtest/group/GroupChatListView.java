@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.example.yongwoon.sendbirdtest.EllipsizeEndTextView;
 import com.example.yongwoon.sendbirdtest.R;
 import com.example.yongwoon.sendbirdtest.Utils;
 import com.sendbird.android.AdminMessage;
@@ -34,10 +33,8 @@ public class GroupChatListView extends RelativeLayout{
     ImageView imageProfile;
 
     @ViewById
-    TextView textName, textMember, textNew, textTime;
+    TextView textName, textMember, textNew, textTime, textContent;
 
-    @ViewById
-    EllipsizeEndTextView textContent;
 
 
     public GroupChatListView(Context context) {

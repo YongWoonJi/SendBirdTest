@@ -17,8 +17,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -34,12 +34,17 @@ public class Utils {
         return sdf.format(date);
     }
 
-    public static String convertTimeToString2(Date date) {
+    public static String convertTimeToString2(long date) {
         return sdf2.format(date);
     }
 
-    public static String convertTimeToString3(Date date) {
+    public static String convertTimeToString3(long date) {
         return sdf3.format(date);
+    }
+
+    public static boolean hasSameDate(long millisFirst, long millisSecond) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        return dateFormat.format(millisFirst).equals(dateFormat.format(millisSecond));
     }
 
     public static String getGroupChannelTitle(GroupChannel channel) {

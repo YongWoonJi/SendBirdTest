@@ -67,7 +67,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
                 }
 
                 if (pushTokenRegistrationStatus == SendBird.PushTokenRegistrationStatus.PENDING) {
-                    Toast.makeText(MyFirebaseInstanceIDService.this, "Connection required to register push token.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyFirebaseInstanceIDService.this, "푸시 토큰을 등록하려면 로그인이 필요합니다", Toast.LENGTH_SHORT).show();
                 }
             }
         });

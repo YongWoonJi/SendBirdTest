@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.example.yongwoon.sendbirdtest.EllipsizeEndTextView;
 import com.example.yongwoon.sendbirdtest.R;
 import com.example.yongwoon.sendbirdtest.Utils;
 import com.sendbird.android.AdminMessage;
@@ -36,10 +35,8 @@ public class PrivateChatListView extends RelativeLayout {
     ImageView imageProfile;
 
     @ViewById
-    TextView textName, textTime, textNewCount;
+    TextView textName, textTime, textNewCount, textContent;
 
-    @ViewById
-    EllipsizeEndTextView textContent;
 
 
     public PrivateChatListView(Context context) {

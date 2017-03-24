@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    <ImageView
+        android:id="@+id/imageProfile"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:text="AAA"
+        android:id="@+id/textName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/black_01"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toRightOf="@+id/imageProfile"
+        android:layout_toEndOf="@+id/imageProfile" />
+
+    <TextView
+        android:id="@+id/textMessage"
+        android:text="AAAdsf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_chat_grey"
+        android:textSize="13sp"
+        android:textColor="@color/black_01"
+        android:gravity="center_vertical"
+        android:maxWidth="250dp"
+        android:layout_below="@+id/textName"
+        android:layout_alignLeft="@+id/textName"
+        android:layout_alignStart="@+id/textName"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:id="@+id/textTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="읽음\n오후 4:24"
+        android:gravity="start"
+        android:textSize="10sp"
+        android:textColor="#888888"
+        android:layout_toRightOf="@+id/textMessage"
+        android:layout_toEndOf="@+id/textMessage"
+        android:layout_alignBottom="@+id/textMessage"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp" />
+
+</RelativeLayout>
