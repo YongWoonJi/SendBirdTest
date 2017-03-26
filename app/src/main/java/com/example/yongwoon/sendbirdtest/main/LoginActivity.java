@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 showProgressBar(false);
 
                 if (e != null) {
+                    Log.e("LoginActivity", e.getCode() + " - " + e.getMessage());
                     showSnackbar("로그인 실패 : " + e.getCode() + " - " + e.getMessage());
                     btnLogin.setEnabled(true);
                     PreferenceManager.setConnected(false);
