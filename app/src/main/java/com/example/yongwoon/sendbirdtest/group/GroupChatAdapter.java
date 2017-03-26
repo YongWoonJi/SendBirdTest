@@ -1,6 +1,7 @@
 package com.example.yongwoon.sendbirdtest.group;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +19,7 @@ import com.sendbird.android.UserMessage;
 import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -30,7 +32,13 @@ public class GroupChatAdapter extends BaseAdapter {
 
     private static final int VIEW_TYPE_USER_MESSAGE_ME = 10;
     private static final int VIEW_TYPE_USER_MESSAGE_OTHER = 11;
-    private static final int VIEW_TYPE_ADMIN_MESSAGE = 20;
+    private static final int VIEW_TYPE_FILE_MESSAGE_ME = 20;
+    private static final int VIEW_TYPE_FILE_MESSAGE_OTHER = 21;
+    private static final int VIEW_TYPE_FILE_MESSAGE_IMAGE_ME = 22;
+    private static final int VIEW_TYPE_FILE_MESSAGE_IMAGE_OTHER = 23;
+    private static final int VIEW_TYPE_FILE_MESSAGE_VIDEO_ME = 24;
+    private static final int VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER = 25;
+    private static final int VIEW_TYPE_ADMIN_MESSAGE = 30;
 
     private Context mContext;
     private GroupChannel mChannel;
@@ -38,6 +46,8 @@ public class GroupChatAdapter extends BaseAdapter {
 
     private ArrayList<String> mFailedMessageIdList = new ArrayList<>();
     private boolean mIsMessageListLoading;
+
+    private Hashtable<String, Uri> mTempFileMessageUriTable = new Hashtable<>();
 
     public GroupChatAdapter (Context context) {
         mContext = context;
@@ -57,7 +67,28 @@ public class GroupChatAdapter extends BaseAdapter {
             } else {
                 return VIEW_TYPE_USER_MESSAGE_OTHER;
             }
-
+        } else if (message instanceof FileMessage) {
+            FileMessage fileMessage = (FileMessage) message;
+            if (fileMessage.getType().toLowerCase().startsWith("image")) {
+                // If the sender is current user
+                if (fileMessage.getSender().getUserId().equals(SendBird.getCurrentUser().getUserId())) {
+                    return VIEW_TYPE_FILE_MESSAGE_IMAGE_ME;
+                } else {
+                    return VIEW_TYPE_FILE_MESSAGE_IMAGE_OTHER;
+                }
+            } else if (fileMessage.getType().toLowerCase().startsWith("video")) {
+                if (fileMessage.getSender().getUserId().equals(SendBird.getCurrentUser().getUserId())) {
+                    return VIEW_TYPE_FILE_MESSAGE_VIDEO_ME;
+                } else {
+                    return VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER;
+                }
+            } else {
+                if (fileMessage.getSender().getUserId().equals(SendBird.getCurrentUser().getUserId())) {
+                    return VIEW_TYPE_FILE_MESSAGE_ME;
+                } else {
+                    return VIEW_TYPE_FILE_MESSAGE_OTHER;
+                }
+            }
         } else if (message instanceof AdminMessage) {
             return VIEW_TYPE_ADMIN_MESSAGE;
         }
@@ -72,6 +103,16 @@ public class GroupChatAdapter extends BaseAdapter {
                 return ChatSendView_.build(mContext);
             case VIEW_TYPE_USER_MESSAGE_OTHER:
                 return ChatReceiveView_.build(mContext);
+            case VIEW_TYPE_ADMIN_MESSAGE:
+            case VIEW_TYPE_FILE_MESSAGE_ME:
+            case VIEW_TYPE_FILE_MESSAGE_OTHER:
+
+            case VIEW_TYPE_FILE_MESSAGE_IMAGE_ME:
+                return ChatImageSendView_.build(mContext);
+            case VIEW_TYPE_FILE_MESSAGE_IMAGE_OTHER:
+                return ChatImageReceiveView_.build(mContext);
+            case VIEW_TYPE_FILE_MESSAGE_VIDEO_ME:
+            case VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER:
         }
 
         throw new IllegalArgumentException("invalid view type");
@@ -96,6 +137,10 @@ public class GroupChatAdapter extends BaseAdapter {
 //            }
 //        }
 
+        isTempMessage = isTempMessage(message);
+        Uri tempFileMessageUri = getTempFileMessageUri(message);
+        isFailedMessage = isFailedMessage(message);
+
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_USER_MESSAGE_ME: {
                 ChatSendView view = (ChatSendView) holder.getView();
@@ -107,9 +152,24 @@ public class GroupChatAdapter extends BaseAdapter {
                 view.bind((UserMessage) message, mChannel, isNewDay, isContinuous);
                 return;
             }
-            case VIEW_TYPE_ADMIN_MESSAGE: {
+            case VIEW_TYPE_ADMIN_MESSAGE:
+                return;
+            case VIEW_TYPE_FILE_MESSAGE_ME:
+                return;
+            case VIEW_TYPE_FILE_MESSAGE_OTHER:
+                return;
+            case VIEW_TYPE_FILE_MESSAGE_IMAGE_ME: {
+                ChatImageSendView view = (ChatImageSendView) holder.getView();
+                view.bind((FileMessage) message, mChannel, isNewDay, isTempMessage, isFailedMessage, tempFileMessageUri);
                 return;
             }
+            case VIEW_TYPE_FILE_MESSAGE_IMAGE_OTHER: {
+                ChatImageReceiveView view = (ChatImageReceiveView) holder.getView();
+                view.bind((FileMessage) message, mChannel, isNewDay, isContinuous);
+                return;
+            }
+            case VIEW_TYPE_FILE_MESSAGE_VIDEO_ME:
+            case VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER:
         }
 
         throw new IllegalArgumentException("invalid position");
@@ -138,8 +198,11 @@ public class GroupChatAdapter extends BaseAdapter {
                     return;
                 }
             } else if (message instanceof FileMessage && msg instanceof FileMessage) {
-                if (((FileMessage) msg).getRequestId().equals(((FileMessage)message).getRequestId())) {
-                    //..
+                if (((FileMessage) msg).getRequestId().equals(((FileMessage) message).getRequestId())) {
+                    mTempFileMessageUriTable.remove(((FileMessage) message).getRequestId());
+                    mMessageList.set(i, message);
+                    notifyDataSetChanged();
+                    return;
                 }
             }
         }
@@ -264,4 +327,22 @@ public class GroupChatAdapter extends BaseAdapter {
 
         return false;
     }
+
+    public void addTempFileMessageInfo(FileMessage message, Uri uri) {
+        mTempFileMessageUriTable.put(message.getRequestId(), uri);
+    }
+
+    public Uri getTempFileMessageUri(BaseMessage message) {
+        if (!isTempMessage(message)) {
+            return null;
+        }
+
+        if (!(message instanceof FileMessage)) {
+            return null;
+        }
+
+        return mTempFileMessageUriTable.get(((FileMessage) message).getRequestId());
+    }
+
+
 }

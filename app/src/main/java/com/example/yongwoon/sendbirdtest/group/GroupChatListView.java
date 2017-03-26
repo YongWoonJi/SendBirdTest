@@ -66,7 +66,7 @@ public class GroupChatListView extends RelativeLayout{
             } else if (lastMessage instanceof AdminMessage) {
                 textContent.setText(((AdminMessage)lastMessage).getMessage());
             } else {
-                String message = String.format("%1$s has uploaded a file.", ((FileMessage)lastMessage).getSender().getNickname());
+                String message = String.format("%1$s 님이 파일을 보냈습니다", ((FileMessage)lastMessage).getSender().getNickname());
                 textContent.setText(message);
             }
         }

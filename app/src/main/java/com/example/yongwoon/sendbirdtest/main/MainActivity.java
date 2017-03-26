@@ -48,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle mDrawerToggle;
 
+    OnBackPressListener listener;
+    public interface OnBackPressListener {
+        boolean onBack();
+    }
+
+    public void setOnBackPressListener(OnBackPressListener listener) {
+        this.listener = listener;
+    }
+
     @AfterViews
     void init() {
         setSupportActionBar(toolbar);
@@ -188,6 +197,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        if (listener != null) {
+            if (!listener.onBack()) {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

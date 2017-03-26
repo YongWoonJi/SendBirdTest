@@ -1,7 +1,16 @@
 package com.example.yongwoon.sendbirdtest.group;
 
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -17,12 +26,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yongwoon.sendbirdtest.main.MainActivity;
 import com.example.yongwoon.sendbirdtest.PreferenceManager;
 import com.example.yongwoon.sendbirdtest.R;
 import com.example.yongwoon.sendbirdtest.Utils;
+import com.example.yongwoon.sendbirdtest.main.MainActivity;
 import com.sendbird.android.BaseChannel;
 import com.sendbird.android.BaseMessage;
+import com.sendbird.android.FileMessage;
 import com.sendbird.android.GroupChannel;
 import com.sendbird.android.SendBird;
 import com.sendbird.android.SendBirdException;
@@ -38,7 +48,12 @@ import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.InstanceState;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,9 +64,17 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     private static final String CHANNEL_HANDLER_ID = "CHANNEL_HANDLER_GROUP_CHANNEL_CHAT";
     private static final String CONNECTION_HANDLER_ID = "CONNECTION_HANDLER_GROUP_CHANNEL_CHAT";
 
+    private static final int INTENT_REQUEST_CHOOSE_MEDIA = 301;
+    private static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 13;
+    private static final int INTENT_REQUEST_CAPTURE_IMAGE = 100;
+    private static final int INTENT_REQUEST_GET_IMAGE = 200;
+
     @InstanceState
     @FragmentArg
     String mChannelUrl;
+
+    @ViewById(R.id.root)
+    RelativeLayout rootView;
 
     @ViewById(R.id.rv_view)
     RecyclerView rView;
@@ -83,6 +106,9 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     boolean isFabOpen = false;
     Animation fab_open,fab_close,rotate_forward,rotate_backward;
 
+    File savedFile;
+    Uri cameraUri;
+
 
     @AfterViews
     void init() {
@@ -110,6 +136,16 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
         setUpChatListAdapter();
         initFab();
         updateActionBarTitle();
+        ((MainActivity)getActivity()).setOnBackPressListener(new MainActivity.OnBackPressListener() {
+            @Override
+            public boolean onBack() {
+                if (isFabOpen) {
+                    animateFAB();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void setUpRecyclerView() {
@@ -393,22 +429,144 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
                 animateFAB();
                 break;
             case R.id.fab1:{
-                Toast.makeText(getContext(), "파일", Toast.LENGTH_SHORT).show();
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestStoragePermissions();
+                } else {
+                    Intent intent = new Intent();
+                    intent.setType("*/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent, "파일 선택"), INTENT_REQUEST_CHOOSE_MEDIA);
+                    SendBird.setAutoBackgroundDetection(false);
+                }
                 animateFAB();
                 break;
             }
             case R.id.fab2:{
-                Toast.makeText(getContext(), "카메라", Toast.LENGTH_SHORT).show();
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestStoragePermissions();
+                } else {
+                    cameraUri = FileProvider.getUriForFile(getContext(), getContext().getPackageName() + ".provider", getSaveFile());
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+                    startActivityForResult(intent, INTENT_REQUEST_CAPTURE_IMAGE);
+                    SendBird.setAutoBackgroundDetection(false);
+                }
                 animateFAB();
                 break;
             }
             case R.id.fab3:{
-                Toast.makeText(getContext(), "사진", Toast.LENGTH_SHORT).show();
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestStoragePermissions();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    startActivityForResult(intent, INTENT_REQUEST_GET_IMAGE);
+                    SendBird.setAutoBackgroundDetection(false);
+                }
                 animateFAB();
                 break;
             }
         }
     }
+
+
+
+    private void requestStoragePermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            Snackbar.make(rootView, "파일 전송을 위해 권한 허용이 필요합니다", Snackbar.LENGTH_LONG)
+                    .setAction("확인", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                    PERMISSION_WRITE_EXTERNAL_STORAGE);
+                        }
+                    })
+                    .show();
+        } else {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSION_WRITE_EXTERNAL_STORAGE);
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == INTENT_REQUEST_CHOOSE_MEDIA && resultCode == RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+
+            sendFileWithThumbnail(data.getData());
+        } else if (requestCode == INTENT_REQUEST_CAPTURE_IMAGE && resultCode == RESULT_OK) {
+            if (cameraUri == null) {
+                return;
+            }
+
+            sendFileWithThumbnail(cameraUri);
+        } else if (requestCode == INTENT_REQUEST_GET_IMAGE && resultCode == RESULT_OK) {
+            if (data == null) {
+                return;
+            }
+
+            sendFileWithThumbnail(data.getData());
+        }
+
+        SendBird.setAutoBackgroundDetection(true);
+    }
+
+    private void sendFileWithThumbnail(Uri uri) {
+        // Specify two dimensions of thumbnails to generate
+        List<FileMessage.ThumbnailSize> thumbnailSizes = new ArrayList<>();
+        thumbnailSizes.add(new FileMessage.ThumbnailSize(240, 240));
+        thumbnailSizes.add(new FileMessage.ThumbnailSize(320, 320));
+
+        Hashtable<String, Object> info = Utils.getFileInfo(getActivity(), uri);
+
+        if (info == null) {
+            Toast.makeText(getActivity(), "Extracting file information failed.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        final String path = (String) info.get("path");
+        final File file = new File(path);
+        final String name = file.getName();
+        final String mime = (String) info.get("mime");
+        final int size = (Integer) info.get("size");
+
+        if (path.equals("")) {
+            Toast.makeText(getActivity(), "File must be located in local storage.", Toast.LENGTH_LONG).show();
+        } else {
+            // Send image with thumbnails in the specified dimensions
+            FileMessage tempFileMessage = mChannel.sendFileMessage(file, name, mime, size, "", null, thumbnailSizes, new BaseChannel.SendFileMessageHandler() {
+                @Override
+                public void onSent(FileMessage fileMessage, SendBirdException e) {
+                    if (e != null) {
+                        Toast.makeText(getActivity(), "" + e.getCode() + ":" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        mChatAdapter.markMessageFailed(fileMessage.getRequestId());
+                        return;
+                    }
+
+                    mChatAdapter.markMessageSent(fileMessage);
+                }
+            });
+
+            mChatAdapter.addTempFileMessageInfo(tempFileMessage, uri);
+            mChatAdapter.addFirst(tempFileMessage);
+        }
+    }
+
+
+    private File getSaveFile() {
+        File dir = getContext().getExternalFilesDir("capture");
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        savedFile = new File(dir, "image_" + System.currentTimeMillis() + ".jpeg");
+        return savedFile;
+    }
+
 
 
 
