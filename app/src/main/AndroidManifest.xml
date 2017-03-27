@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -22,9 +21,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
-
 
         <activity android:name=".main.MainActivity_" />
         <activity android:name=".main.LoginActivity_">
@@ -46,8 +44,12 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".group.CreateGroupChannelActivity_"
+        <activity
+            android:name=".group.CreateGroupChannelActivity_"
             android:label="그룹 채팅 생성" />
+        <activity android:name=".MediaPlayerActivity" />
+        <activity android:name=".group.InviteActivity_" />
+        <activity android:name=".group.MembersActivity_"></activity>
     </application>
 
 </manifest>

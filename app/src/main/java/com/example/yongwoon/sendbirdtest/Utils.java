@@ -328,19 +328,17 @@ public class Utils {
 
 
     public static void downloadFile(Context context, String url, String fileName) {
-        DownloadManager.Request downloadRequest = new DownloadManager.Request(Uri.parse(url));
-        downloadRequest.setTitle(fileName);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setTitle(fileName);
 
-        // in order for this if to run, you must use the android 3.2 to compile your app
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            downloadRequest.allowScanningByMediaScanner();
-            downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         }
-
-        downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(downloadRequest);
+        manager.enqueue(request);
     }
 
 

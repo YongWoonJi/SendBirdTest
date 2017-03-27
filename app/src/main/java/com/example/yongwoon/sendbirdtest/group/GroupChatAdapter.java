@@ -54,6 +54,14 @@ public class GroupChatAdapter extends BaseAdapter {
         mMessageList = new ArrayList<>();
     }
 
+    OnItemClickListener listener;
+    interface OnItemClickListener {
+        void onFileMessageItemClick(FileMessage message);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     public int getItemViewType(int position) {
@@ -105,14 +113,17 @@ public class GroupChatAdapter extends BaseAdapter {
                 return ChatReceiveView_.build(mContext);
             case VIEW_TYPE_ADMIN_MESSAGE:
             case VIEW_TYPE_FILE_MESSAGE_ME:
+                return ChatFileSendView_.build(mContext);
             case VIEW_TYPE_FILE_MESSAGE_OTHER:
-
+                return ChatFileReceiveView_.build(mContext);
             case VIEW_TYPE_FILE_MESSAGE_IMAGE_ME:
                 return ChatImageSendView_.build(mContext);
             case VIEW_TYPE_FILE_MESSAGE_IMAGE_OTHER:
                 return ChatImageReceiveView_.build(mContext);
             case VIEW_TYPE_FILE_MESSAGE_VIDEO_ME:
+                return ChatVideoSendView_.build(mContext);
             case VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER:
+                return ChatVideoReceiveView_.build(mContext);
         }
 
         throw new IllegalArgumentException("invalid view type");
@@ -154,10 +165,16 @@ public class GroupChatAdapter extends BaseAdapter {
             }
             case VIEW_TYPE_ADMIN_MESSAGE:
                 return;
-            case VIEW_TYPE_FILE_MESSAGE_ME:
+            case VIEW_TYPE_FILE_MESSAGE_ME: {
+                ChatFileSendView view = (ChatFileSendView) holder.getView();
+                view.bind((FileMessage) message, mChannel, isNewDay, isTempMessage, isFailedMessage, tempFileMessageUri);
                 return;
-            case VIEW_TYPE_FILE_MESSAGE_OTHER:
+            }
+            case VIEW_TYPE_FILE_MESSAGE_OTHER: {
+                ChatFileReceiveView view = (ChatFileReceiveView) holder.getView();
+                view.bind((FileMessage) message, mChannel, isNewDay, isContinuous);
                 return;
+            }
             case VIEW_TYPE_FILE_MESSAGE_IMAGE_ME: {
                 ChatImageSendView view = (ChatImageSendView) holder.getView();
                 view.bind((FileMessage) message, mChannel, isNewDay, isTempMessage, isFailedMessage, tempFileMessageUri);
@@ -168,8 +185,16 @@ public class GroupChatAdapter extends BaseAdapter {
                 view.bind((FileMessage) message, mChannel, isNewDay, isContinuous);
                 return;
             }
-            case VIEW_TYPE_FILE_MESSAGE_VIDEO_ME:
-            case VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER:
+            case VIEW_TYPE_FILE_MESSAGE_VIDEO_ME: {
+                ChatVideoSendView view = (ChatVideoSendView) holder.getView();
+                view.bind((FileMessage) message, mChannel, isNewDay, isTempMessage, isFailedMessage, tempFileMessageUri, listener);
+                return;
+            }
+            case VIEW_TYPE_FILE_MESSAGE_VIDEO_OTHER: {
+                ChatVideoReceiveView view = (ChatVideoReceiveView) holder.getView();
+                view.bind((FileMessage) message, mChannel, isNewDay, isContinuous, listener);
+                return;
+            }
         }
 
         throw new IllegalArgumentException("invalid position");

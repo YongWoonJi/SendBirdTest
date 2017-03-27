@@ -15,6 +15,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yongwoon.sendbirdtest.MediaPlayerActivity;
 import com.example.yongwoon.sendbirdtest.PreferenceManager;
 import com.example.yongwoon.sendbirdtest.R;
 import com.example.yongwoon.sendbirdtest.Utils;
@@ -113,6 +117,7 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     @AfterViews
     void init() {
         setRetainInstance(true);
+        setHasOptionsMenu(true);
         mIsTyping = false;
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -164,7 +169,14 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     }
 
     private void setUpChatListAdapter() {
-        //..
+        mChatAdapter.setOnItemClickListener(new GroupChatAdapter.OnItemClickListener() {
+            @Override
+            public void onFileMessageItemClick(FileMessage message) {
+                Intent intent = new Intent(getContext(), MediaPlayerActivity.class);
+                intent.putExtra("url", message.getUrl());
+                startActivity(intent);
+            }
+        });
     }
 
     void updateActionBarTitle() {
@@ -568,6 +580,23 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group_chat_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.members:
+                MembersActivity_.intent(this).mChannelUrl(mChannelUrl).start();
+                return true;
+            case R.id.invite:
+                InviteActivity_.intent(this).mChannelUrl(mChannelUrl).start();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
 
+    }
 }
