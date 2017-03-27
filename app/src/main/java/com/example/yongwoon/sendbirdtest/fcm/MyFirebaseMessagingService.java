@@ -90,16 +90,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     public static void sendNotification(Context context, String messageBody, String channelUrl) {
-        Intent intent = new Intent(context, MainActivity_.class);
+        Intent intent = MainActivity_.intent(context).get();
         intent.putExtra("groupChannelUrl", channelUrl);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 /* Request code */, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1 /* Request code */, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(context.getResources().getString(R.string.app_name))
                 .setContentText(messageBody)
                 .setAutoCancel(true)
