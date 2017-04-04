@@ -90,7 +90,7 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     RelativeLayout fabBackground;
 
     @ViewById
-    TextView textSend, textTyping;
+    TextView textSend, textTyping, textFaq, textCamera, textFile;
 
     @ViewById
     ImageView imageAdd;
@@ -419,6 +419,9 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
             fab1.setClickable(false);
             fab2.setClickable(false);
             fab3.setClickable(false);
+            textFaq.startAnimation(fab_close);
+            textCamera.startAnimation(fab_close);
+            textFile.startAnimation(fab_close);
             isFabOpen = false;
         } else {
             fabBackground.setVisibility(View.VISIBLE);
@@ -429,6 +432,9 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
             fab1.setClickable(true);
             fab2.setClickable(true);
             fab3.setClickable(true);
+            textFaq.startAnimation(fab_open);
+            textCamera.startAnimation(fab_open);
+            textFile.startAnimation(fab_open);
             isFabOpen = true;
         }
     }

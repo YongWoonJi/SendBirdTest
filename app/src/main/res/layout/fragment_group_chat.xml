@@ -105,11 +105,11 @@
             android:text="사진"
             android:textSize="15sp"
             android:textColor="#ffffff"
-            android:id="@+id/text_faq"
-            android:layout_above="@+id/textQuestion"
-            android:layout_alignLeft="@+id/textQuestion"
-            android:layout_alignStart="@+id/textQuestion"
-            android:layout_marginBottom="56dp" />
+            android:id="@+id/textFaq"
+            android:layout_above="@+id/textCamera"
+            android:layout_alignLeft="@+id/textCamera"
+            android:layout_alignStart="@+id/textCamera"
+            android:layout_marginBottom="53dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -117,11 +117,11 @@
             android:text="카메라"
             android:textSize="15sp"
             android:textColor="#ffffff"
-            android:id="@+id/textQuestion"
-            android:layout_above="@+id/textMenu"
-            android:layout_alignLeft="@+id/textMenu"
-            android:layout_alignStart="@+id/textMenu"
-            android:layout_marginBottom="56dp" />
+            android:id="@+id/textCamera"
+            android:layout_above="@+id/textFile"
+            android:layout_alignLeft="@+id/textFile"
+            android:layout_alignStart="@+id/textFile"
+            android:layout_marginBottom="53dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
             android:text="파일"
             android:textSize="15sp"
             android:textColor="#ffffff"
-            android:id="@+id/textMenu"
+            android:id="@+id/textFile"
             android:layout_marginLeft="89dp"
             android:layout_marginStart="89dp"
             android:layout_marginBottom="37dp"
