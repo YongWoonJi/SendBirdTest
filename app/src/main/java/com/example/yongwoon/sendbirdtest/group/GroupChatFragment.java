@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -84,13 +85,13 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     RecyclerView rView;
 
     @ViewById
-    ImageView fab, fab1, fab2, fab3;
+    LinearLayout fab1, fab2, fab3;
 
     @ViewById
-    RelativeLayout fabBackground;
+    FrameLayout fabBackground;
 
     @ViewById
-    TextView textSend, textTyping, textFaq, textCamera, textFile;
+    TextView textSend, textTyping;
 
     @ViewById
     ImageView imageAdd;
@@ -108,7 +109,7 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
     private boolean mIsTyping;
 
     boolean isFabOpen = false;
-    Animation fab_open,fab_close,rotate_forward,rotate_backward;
+    Animation fab_open1, fab_open2, fab_open3 ,fab_close,rotate_forward,rotate_backward;
 
     File savedFile;
     Uri cameraUri;
@@ -399,7 +400,9 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
             }
         });
 
-        fab_open = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open);
+        fab_open1 = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open1);
+        fab_open2 = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open2);
+        fab_open3 = AnimationUtils.loadAnimation(getContext(), R.anim.fab_open3);
         fab_close = AnimationUtils.loadAnimation(getContext(),R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(getContext(),R.anim.rotate_backward);
@@ -419,22 +422,16 @@ public class GroupChatFragment extends Fragment implements View.OnClickListener 
             fab1.setClickable(false);
             fab2.setClickable(false);
             fab3.setClickable(false);
-            textFaq.startAnimation(fab_close);
-            textCamera.startAnimation(fab_close);
-            textFile.startAnimation(fab_close);
             isFabOpen = false;
         } else {
             fabBackground.setVisibility(View.VISIBLE);
             imageAdd.startAnimation(rotate_forward);
-            fab1.startAnimation(fab_open);
-            fab2.startAnimation(fab_open);
-            fab3.startAnimation(fab_open);
+            fab1.startAnimation(fab_open1);
+            fab2.startAnimation(fab_open2);
+            fab3.startAnimation(fab_open3);
             fab1.setClickable(true);
             fab2.setClickable(true);
             fab3.setClickable(true);
-            textFaq.startAnimation(fab_open);
-            textCamera.startAnimation(fab_open);
-            textFile.startAnimation(fab_open);
             isFabOpen = true;
         }
     }
